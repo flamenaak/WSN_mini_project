@@ -1,6 +1,6 @@
-CONTIKI = ../
+CONTIKI = ../..
 
-all: multiho-example
+all: networking
 
 CONTIKI_WITH_RIME = 1
 include $(CONTIKI)/Makefile.include
