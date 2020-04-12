@@ -31,6 +31,7 @@
 #include "net/routing/routing.h"
 #include "net/netstack.h"
 #include "net/ipv6/simple-udp.h"
+#include "os/storage/cfs/cfs.h"
 
 #include "sys/log.h"
 #define LOG_MODULE "App"
@@ -44,6 +45,9 @@ static struct simple_udp_connection udp_conn;
 
 PROCESS(udp_server_process, "UDP server");
 AUTOSTART_PROCESSES(&udp_server_process);
+
+
+
 /*---------------------------------------------------------------------------*/
 static void
 udp_rx_callback(struct simple_udp_connection *c,
@@ -62,6 +66,14 @@ udp_rx_callback(struct simple_udp_connection *c,
   LOG_INFO("Sending response.\n");
   simple_udp_sendto(&udp_conn, data, datalen, sender_addr);
 #endif /* WITH_SERVER_REPLY */
+
+
+int fd;
+fd = cfs_open("receivedMsgs", CFS_WRITE + CFS_APPEND);
+cfs_write(fd, (char *) data, 32);
+cfs_close(fd);
+
+  
 }
 /*---------------------------------------------------------------------------*/
 PROCESS_THREAD(udp_server_process, ev, data)
