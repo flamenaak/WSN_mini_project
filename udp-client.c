@@ -46,7 +46,7 @@ PROCESS_THREAD(udp_client_process, ev, data)
 {
   static struct etimer periodic_timer;
   static unsigned count;
-  static char str[32];
+  static char str[1000];
   uip_ipaddr_t dest_ipaddr;
 
   PROCESS_BEGIN();
@@ -64,12 +64,12 @@ PROCESS_THREAD(udp_client_process, ev, data)
         if (NETSTACK_ROUTING.node_is_reachable() && NETSTACK_ROUTING.get_root_ipaddr(&dest_ipaddr))
     {
       /* Send to DAG root */
-      unsigned val = sht11_sensor.value(SHT11_SENSOR_TEMP);
+      unsigned temp = sht11_sensor.value(SHT11_SENSOR_TEMP);
       unsigned hum = sht11_sensor.value(SHT11_SENSOR_HUMIDITY);
       LOG_INFO("Sending request %u to ", count);
       LOG_INFO_6ADDR(&dest_ipaddr);
       LOG_INFO_("\n");
-      snprintf(str, sizeof(str), "hello %d : temp value is  %d, hum value is %d", count, val, hum);
+      snprintf(str, sizeof(str), "%d %d", temp, hum);
       simple_udp_sendto(&udp_conn, str, strlen(str), &dest_ipaddr);
       count++;
     }

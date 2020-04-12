@@ -759,7 +759,7 @@ far_rom          0x00000000         0x00000000
 Linker script and memory map
 
 LOAD /usr/local/bin/../lib/gcc/msp430/4.7.2/mmpy-16/crt0ivtbl16.o
-                0x00002da8                _stack = _end
+                0x00003170                _stack = _end
 LOAD udp-client.o
 LOAD build/sky/obj/contiki-main.o
 LOAD build/sky/contiki-ng-sky.a
@@ -2426,134 +2426,134 @@ LOAD /usr/local/bin/../lib/gcc/msp430/4.7.2/mmpy-16/libcrt0.a
                 0x0000eb9a                __data_load_start = LOADADDR (.data)
                 0x0000013c                __data_size = SIZEOF (.data)
 
-.bss            0x0000123c     0x1b6a load address 0x0000ecd6
+.bss            0x0000123c     0x1f32 load address 0x0000ecd6
                 0x0000123c                __bss_start = .
  *(.bss .bss.*)
- .bss           0x0000123c       0x4a udp-client.o
- .bss           0x00001286        0x8 build/sky/contiki-ng-sky.a(button-sensor.o)
- .bss           0x0000128e        0x6 build/sky/contiki-ng-sky.a(sensors.o)
- .bss           0x00001294        0x8 build/sky/contiki-ng-sky.a(platform.o)
- .bss           0x0000129c        0xa build/sky/contiki-ng-sky.a(clock.o)
- .bss           0x000012a6        0x2 build/sky/contiki-ng-sky.a(watchdog.o)
- .bss           0x000012a8        0x6 build/sky/contiki-ng-sky.a(etimer.o)
- .bss           0x000012ae       0x16 build/sky/contiki-ng-sky.a(log.o)
-                0x000012ae                curr_log_level_lwm2m
-                0x000012b0                curr_log_level_snmp
-                0x000012b2                curr_log_level_coap
-                0x000012b4                curr_log_level_6top
-                0x000012b6                curr_log_level_framer
-                0x000012b8                curr_log_level_mac
-                0x000012ba                curr_log_level_nullnet
-                0x000012bc                curr_log_level_6lowpan
-                0x000012be                curr_log_level_ipv6
-                0x000012c0                curr_log_level_tcpip
-                0x000012c2                curr_log_level_rpl
- .bss           0x000012c4        0x4 build/sky/contiki-ng-sky.a(ctimer.o)
- .bss           0x000012c8        0x2 build/sky/contiki-ng-sky.a(rtimer.o)
- .bss           0x000012ca        0x2 build/sky/contiki-ng-sky.a(node-id.o)
-                0x000012ca                node_id
- .bss           0x000012cc       0xc8 build/sky/contiki-ng-sky.a(process.o)
-                0x000012cc                process_current
-                0x000012ce                process_list
- .bss           0x00001394      0x580 build/sky/contiki-ng-sky.a(queuebuf.o)
- .bss           0x00001914       0x86 build/sky/contiki-ng-sky.a(packetbuf.o)
- .bss           0x0000199a        0x2 build/sky/contiki-ng-sky.a(netstack.o)
- .bss           0x0000199c       0xbe build/sky/contiki-ng-sky.a(csma-output.o)
- .bss           0x00001a5a       0x28 build/sky/contiki-ng-sky.a(uip-ds6.o)
- .bss           0x00001a82       0x3c build/sky/contiki-ng-sky.a(uip-ds6-route.o)
- .bss           0x00001abe      0x120 build/sky/contiki-ng-sky.a(uip-ds6-nbr.o)
- .bss           0x00001bde        0xc build/sky/contiki-ng-sky.a(tcpip.o)
- .bss           0x00001bea        0x8 build/sky/contiki-ng-sky.a(uip6.o)
-                0x00001bea                uip_last_proto
-                0x00001bec                uip_ext_len
-                0x00001bee                uip_ext_bitmap
- .bss           0x00001bf2        0x8 build/sky/contiki-ng-sky.a(uip-nd6.o)
- .bss           0x00001bfa       0xf1 build/sky/contiki-ng-sky.a(simple-udp.o)
- *fill*         0x00001ceb        0x1 00
- .bss           0x00001cec      0x6e0 build/sky/contiki-ng-sky.a(sicslowpan.o)
- .bss           0x000023cc        0x1 build/sky/contiki-ng-sky.a(rpl.o)
- *fill*         0x000023cd        0x1 00
- .bss           0x000023ce       0x12 build/sky/contiki-ng-sky.a(rpl-dag-root.o)
- .bss           0x000023e0       0x10 build/sky/contiki-ng-sky.a(cc2420.o)
- .bss           0x000023f0       0x9a build/sky/contiki-ng-sky.a(uart1.o)
- .bss           0x0000248a       0xe4 build/sky/contiki-ng-sky.a(nbr-table.o)
- .bss           0x0000256e       0xa0 build/sky/contiki-ng-sky.a(link-stats.o)
- .bss           0x0000260e       0xe0 build/sky/contiki-ng-sky.a(mac-sequence.o)
- .bss           0x000026ee        0x2 build/sky/contiki-ng-sky.a(framer-802154.o)
- .bss           0x000026f0       0x18 build/sky/contiki-ng-sky.a(uipbuf.o)
- .bss           0x00002708       0x14 build/sky/contiki-ng-sky.a(uip-icmp6.o)
- .bss           0x0000271c      0x134 build/sky/contiki-ng-sky.a(uip-sr.o)
- .bss           0x00002850       0x80 build/sky/contiki-ng-sky.a(rpl-neighbor.o)
- .bss           0x000028d0       0x28 build/sky/contiki-ng-sky.a(rpl-timers.o)
- .bss           0x000028f8        0x8 build/sky/contiki-ng-sky.a(rpl-nbr-policy.)
+ .bss           0x0000123c      0x412 udp-client.o
+ .bss           0x0000164e        0x8 build/sky/contiki-ng-sky.a(button-sensor.o)
+ .bss           0x00001656        0x6 build/sky/contiki-ng-sky.a(sensors.o)
+ .bss           0x0000165c        0x8 build/sky/contiki-ng-sky.a(platform.o)
+ .bss           0x00001664        0xa build/sky/contiki-ng-sky.a(clock.o)
+ .bss           0x0000166e        0x2 build/sky/contiki-ng-sky.a(watchdog.o)
+ .bss           0x00001670        0x6 build/sky/contiki-ng-sky.a(etimer.o)
+ .bss           0x00001676       0x16 build/sky/contiki-ng-sky.a(log.o)
+                0x00001676                curr_log_level_lwm2m
+                0x00001678                curr_log_level_snmp
+                0x0000167a                curr_log_level_coap
+                0x0000167c                curr_log_level_6top
+                0x0000167e                curr_log_level_framer
+                0x00001680                curr_log_level_mac
+                0x00001682                curr_log_level_nullnet
+                0x00001684                curr_log_level_6lowpan
+                0x00001686                curr_log_level_ipv6
+                0x00001688                curr_log_level_tcpip
+                0x0000168a                curr_log_level_rpl
+ .bss           0x0000168c        0x4 build/sky/contiki-ng-sky.a(ctimer.o)
+ .bss           0x00001690        0x2 build/sky/contiki-ng-sky.a(rtimer.o)
+ .bss           0x00001692        0x2 build/sky/contiki-ng-sky.a(node-id.o)
+                0x00001692                node_id
+ .bss           0x00001694       0xc8 build/sky/contiki-ng-sky.a(process.o)
+                0x00001694                process_current
+                0x00001696                process_list
+ .bss           0x0000175c      0x580 build/sky/contiki-ng-sky.a(queuebuf.o)
+ .bss           0x00001cdc       0x86 build/sky/contiki-ng-sky.a(packetbuf.o)
+ .bss           0x00001d62        0x2 build/sky/contiki-ng-sky.a(netstack.o)
+ .bss           0x00001d64       0xbe build/sky/contiki-ng-sky.a(csma-output.o)
+ .bss           0x00001e22       0x28 build/sky/contiki-ng-sky.a(uip-ds6.o)
+ .bss           0x00001e4a       0x3c build/sky/contiki-ng-sky.a(uip-ds6-route.o)
+ .bss           0x00001e86      0x120 build/sky/contiki-ng-sky.a(uip-ds6-nbr.o)
+ .bss           0x00001fa6        0xc build/sky/contiki-ng-sky.a(tcpip.o)
+ .bss           0x00001fb2        0x8 build/sky/contiki-ng-sky.a(uip6.o)
+                0x00001fb2                uip_last_proto
+                0x00001fb4                uip_ext_len
+                0x00001fb6                uip_ext_bitmap
+ .bss           0x00001fba        0x8 build/sky/contiki-ng-sky.a(uip-nd6.o)
+ .bss           0x00001fc2       0xf1 build/sky/contiki-ng-sky.a(simple-udp.o)
+ *fill*         0x000020b3        0x1 00
+ .bss           0x000020b4      0x6e0 build/sky/contiki-ng-sky.a(sicslowpan.o)
+ .bss           0x00002794        0x1 build/sky/contiki-ng-sky.a(rpl.o)
+ *fill*         0x00002795        0x1 00
+ .bss           0x00002796       0x12 build/sky/contiki-ng-sky.a(rpl-dag-root.o)
+ .bss           0x000027a8       0x10 build/sky/contiki-ng-sky.a(cc2420.o)
+ .bss           0x000027b8       0x9a build/sky/contiki-ng-sky.a(uart1.o)
+ .bss           0x00002852       0xe4 build/sky/contiki-ng-sky.a(nbr-table.o)
+ .bss           0x00002936       0xa0 build/sky/contiki-ng-sky.a(link-stats.o)
+ .bss           0x000029d6       0xe0 build/sky/contiki-ng-sky.a(mac-sequence.o)
+ .bss           0x00002ab6        0x2 build/sky/contiki-ng-sky.a(framer-802154.o)
+ .bss           0x00002ab8       0x18 build/sky/contiki-ng-sky.a(uipbuf.o)
+ .bss           0x00002ad0       0x14 build/sky/contiki-ng-sky.a(uip-icmp6.o)
+ .bss           0x00002ae4      0x134 build/sky/contiki-ng-sky.a(uip-sr.o)
+ .bss           0x00002c18       0x80 build/sky/contiki-ng-sky.a(rpl-neighbor.o)
+ .bss           0x00002c98       0x28 build/sky/contiki-ng-sky.a(rpl-timers.o)
+ .bss           0x00002cc0        0x8 build/sky/contiki-ng-sky.a(rpl-nbr-policy.)
  .bss.destination_
-                0x00002900        0x2 /usr/local/bin/../lib/gcc/msp430/4.7.2/../../../../msp430/lib/mmpy-16/libc.a(sprintf.o)
+                0x00002cc8        0x2 /usr/local/bin/../lib/gcc/msp430/4.7.2/../../../../msp430/lib/mmpy-16/libc.a(sprintf.o)
  .bss.available_
-                0x00002902        0x2 /usr/local/bin/../lib/gcc/msp430/4.7.2/../../../../msp430/lib/mmpy-16/libc.a(sprintf.o)
+                0x00002cca        0x2 /usr/local/bin/../lib/gcc/msp430/4.7.2/../../../../msp430/lib/mmpy-16/libc.a(sprintf.o)
  *(.near.bss .near.bss.*)
  *(COMMON)
- COMMON         0x00002904        0x1 build/sky/contiki-ng-sky.a(sensors.o)
-                0x00002904                sensors_event
- *fill*         0x00002905        0x1 00
- COMMON         0x00002906        0x2 build/sky/contiki-ng-sky.a(msp430.o)
-                0x00002906                msp430_dco_required
- COMMON         0x00002908       0x2a build/sky/contiki-ng-sky.a(packetbuf.o)
-                0x00002908                packetbuf_addrs
-                0x00002918                packetbuf_attrs
- COMMON         0x00002932        0x8 build/sky/contiki-ng-sky.a(linkaddr.o)
-                0x00002932                linkaddr_node_addr
- COMMON         0x0000293a      0x15c build/sky/contiki-ng-sky.a(uip-ds6.o)
-                0x0000293a                uip_ds6_timer_ra
-                0x00002942                uip_ds6_if
-                0x00002a2e                uip_ds6_netif_addr_list_offset
-                0x00002a2f                uip_ds6_addr_size
-                0x00002a30                uip_ds6_prefix_list
-                0x00002a8a                uip_ds6_timer_periodic
- COMMON         0x00002a96        0x1 build/sky/contiki-ng-sky.a(tcpip.o)
-                0x00002a96                tcpip_event
- *fill*         0x00002a97        0x1 00
- COMMON         0x00002a98      0x1d6 build/sky/contiki-ng-sky.a(uip6.o)
-                0x00002a98                uip_len
-                0x00002a9a                uip_sappdata
-                0x00002a9c                uip_lladdr
-                0x00002aa4                uip_aligned_buf
-                0x00002b94                uip_flags
-                0x00002b96                uip_udp_conn
-                0x00002b98                uip_appdata
-                0x00002b9a                uip_conn
-                0x00002b9c                uip_slen
-                0x00002b9e                uip_udp_conns
- COMMON         0x00002c6e       0x10 build/sky/contiki-ng-sky.a(rpl.o)
-                0x00002c6e                rpl_multicast_addr
- COMMON         0x00002c7e        0x2 build/sky/contiki-ng-sky.a(contiki-sky-pla)
-                0x00002c7e                sensors_flags
- COMMON         0x00002c80        0x8 build/sky/contiki-ng-sky.a(ds2411.o)
-                0x00002c80                ds2411_id
- COMMON         0x00002c88        0xc build/sky/contiki-ng-sky.a(cc2420.o)
-                0x00002c88                cc2420_last_rssi
-                0x00002c8a                cc2420_sfd_start_time
-                0x00002c8c                cc2420_last_correlation
-                0x00002c8e                cc2420_authority_level_of_sender
-                0x00002c90                cc2420_sfd_counter
-                0x00002c92                cc2420_sfd_end_time
- COMMON         0x00002c94       0x14 build/sky/contiki-ng-sky.a(link-stats.o)
-                0x00002c94                periodic_timer
- COMMON         0x00002ca8       0xfe build/sky/contiki-ng-sky.a(rpl-dag.o)
-                0x00002ca8                curr_instance
-                0x00002da6                . = ALIGN (0x2)
-                0x00002da6                __bss_end = .
-                0x00001b6a                __bss_size = SIZEOF (.bss)
+ COMMON         0x00002ccc        0x1 build/sky/contiki-ng-sky.a(sensors.o)
+                0x00002ccc                sensors_event
+ *fill*         0x00002ccd        0x1 00
+ COMMON         0x00002cce        0x2 build/sky/contiki-ng-sky.a(msp430.o)
+                0x00002cce                msp430_dco_required
+ COMMON         0x00002cd0       0x2a build/sky/contiki-ng-sky.a(packetbuf.o)
+                0x00002cd0                packetbuf_addrs
+                0x00002ce0                packetbuf_attrs
+ COMMON         0x00002cfa        0x8 build/sky/contiki-ng-sky.a(linkaddr.o)
+                0x00002cfa                linkaddr_node_addr
+ COMMON         0x00002d02      0x15c build/sky/contiki-ng-sky.a(uip-ds6.o)
+                0x00002d02                uip_ds6_timer_ra
+                0x00002d0a                uip_ds6_if
+                0x00002df6                uip_ds6_netif_addr_list_offset
+                0x00002df7                uip_ds6_addr_size
+                0x00002df8                uip_ds6_prefix_list
+                0x00002e52                uip_ds6_timer_periodic
+ COMMON         0x00002e5e        0x1 build/sky/contiki-ng-sky.a(tcpip.o)
+                0x00002e5e                tcpip_event
+ *fill*         0x00002e5f        0x1 00
+ COMMON         0x00002e60      0x1d6 build/sky/contiki-ng-sky.a(uip6.o)
+                0x00002e60                uip_len
+                0x00002e62                uip_sappdata
+                0x00002e64                uip_lladdr
+                0x00002e6c                uip_aligned_buf
+                0x00002f5c                uip_flags
+                0x00002f5e                uip_udp_conn
+                0x00002f60                uip_appdata
+                0x00002f62                uip_conn
+                0x00002f64                uip_slen
+                0x00002f66                uip_udp_conns
+ COMMON         0x00003036       0x10 build/sky/contiki-ng-sky.a(rpl.o)
+                0x00003036                rpl_multicast_addr
+ COMMON         0x00003046        0x2 build/sky/contiki-ng-sky.a(contiki-sky-pla)
+                0x00003046                sensors_flags
+ COMMON         0x00003048        0x8 build/sky/contiki-ng-sky.a(ds2411.o)
+                0x00003048                ds2411_id
+ COMMON         0x00003050        0xc build/sky/contiki-ng-sky.a(cc2420.o)
+                0x00003050                cc2420_last_rssi
+                0x00003052                cc2420_sfd_start_time
+                0x00003054                cc2420_last_correlation
+                0x00003056                cc2420_authority_level_of_sender
+                0x00003058                cc2420_sfd_counter
+                0x0000305a                cc2420_sfd_end_time
+ COMMON         0x0000305c       0x14 build/sky/contiki-ng-sky.a(link-stats.o)
+                0x0000305c                periodic_timer
+ COMMON         0x00003070       0xfe build/sky/contiki-ng-sky.a(rpl-dag.o)
+                0x00003070                curr_instance
+                0x0000316e                . = ALIGN (0x2)
+                0x0000316e                __bss_end = .
+                0x00001f32                __bss_size = SIZEOF (.bss)
 
-.noinit         0x00002da6        0x2 load address 0x0000ecd6
-                0x00002da6                . = ALIGN (0x2)
-                0x00002da6                __noinit_start = .
+.noinit         0x0000316e        0x2 load address 0x0000ecd6
+                0x0000316e                . = ALIGN (0x2)
+                0x0000316e                __noinit_start = .
  *(.noinit .noinit.*)
- .noinit.crt0   0x00002da6        0x2 /usr/local/bin/../lib/gcc/msp430/4.7.2/mmpy-16/libcrt0.a(__watchdog_support.o)
-                0x00002da6                __wdt_clear_value
-                0x00002da8                . = ALIGN (0x2)
-                0x00002da8                __noinit_end = .
-                0x00002da8                . = ALIGN (0x2)
-                0x00002da8                _end = .
+ .noinit.crt0   0x0000316e        0x2 /usr/local/bin/../lib/gcc/msp430/4.7.2/mmpy-16/libcrt0.a(__watchdog_support.o)
+                0x0000316e                __wdt_clear_value
+                0x00003170                . = ALIGN (0x2)
+                0x00003170                __noinit_end = .
+                0x00003170                . = ALIGN (0x2)
+                0x00003170                _end = .
 
 .infomem        0x00001000        0x0
                 0x00001000                . = ALIGN (0x2)
@@ -2794,9 +2794,9 @@ LOAD /usr/local/bin/../lib/gcc/msp430/4.7.2/mmpy-16/libcrt0.a
  .stab          0x0002a588      0x258 build/sky/contiki-ng-sky.a(spi-legacy.o)
                                 0x57c (size before relaxing)
 
-.stabstr        0x00000000    0x1cd53
+.stabstr        0x00000000    0x1cd54
  *(.stabstr)
- .stabstr       0x00000000    0x1cd53 udp-client.o
+ .stabstr       0x00000000    0x1cd54 udp-client.o
 
 .stab.excl
  *(.stab.excl)
