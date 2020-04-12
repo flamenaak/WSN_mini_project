@@ -61,17 +61,15 @@ PROCESS_THREAD(udp_client_process, ev, data)
   while (1)
   {
     PROCESS_WAIT_EVENT_UNTIL(ev == sensors_event && data == &button_sensor);
-
-    NETSTACK_ROUTING.
-
         if (NETSTACK_ROUTING.node_is_reachable() && NETSTACK_ROUTING.get_root_ipaddr(&dest_ipaddr))
     {
       /* Send to DAG root */
-      int val = light_sensor.value(SHT11_SENSOR_TEMP);
+      unsigned val = sht11_sensor.value(SHT11_SENSOR_TEMP);
+      unsigned hum = sht11_sensor.value(SHT11_SENSOR_HUMIDITY);
       LOG_INFO("Sending request %u to ", count);
       LOG_INFO_6ADDR(&dest_ipaddr);
       LOG_INFO_("\n");
-      snprintf(str, sizeof(str), "hello %d : value is  %d", count, val);
+      snprintf(str, sizeof(str), "hello %d : temp value is  %d, hum value is %d", count, val, hum);
       simple_udp_sendto(&udp_conn, str, strlen(str), &dest_ipaddr);
       count++;
     }
