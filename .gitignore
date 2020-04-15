@@ -34,3 +34,7 @@
 #Cooja shit 
 *.sky
 *.map
+
+#front end junks
+wsn-frontend/node_modules/**
+wsn-frontend/dist/**
