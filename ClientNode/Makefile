@@ -1,4 +1,4 @@
-CONTIKI = ../..
+CONTIKI = /home/vagrant/contiki/contiki-ng
 
 all: networking
 

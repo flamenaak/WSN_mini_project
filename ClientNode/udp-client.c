@@ -20,10 +20,9 @@
 
 static struct simple_udp_connection udp_conn;
 
-/*---------------------------------------------------------------------------*/
 PROCESS(udp_client_process, "UDP client");
 AUTOSTART_PROCESSES(&udp_client_process);
-/*---------------------------------------------------------------------------*/
+
 static void
 udp_rx_callback(struct simple_udp_connection *c,
                 const uip_ipaddr_t *sender_addr,
@@ -33,19 +32,16 @@ udp_rx_callback(struct simple_udp_connection *c,
                 const uint8_t *data,
                 uint16_t datalen)
 {
-
-  LOG_INFO("Received response '%.*s' from ", datalen, (char *)data);
-  LOG_INFO_6ADDR(sender_addr);
-#if LLSEC802154_CONF_ENABLED
-  LOG_INFO_(" LLSEC LV:%d", uipbuf_get_attr(UIPBUF_ATTR_LLSEC_LEVEL));
-#endif
-  LOG_INFO_("\n");
+  // Code for handling response from server - not neccessary
+  // or maybe just log osme kind of ackn.
+  LOG_INFO("[CLIENT]: Response from server received!\n");
 }
-/*---------------------------------------------------------------------------*/
+
+
+
 PROCESS_THREAD(udp_client_process, ev, data)
 {
   static struct etimer periodic_timer;
-  static unsigned count;
   static char str[1000];
   uip_ipaddr_t dest_ipaddr;
 
@@ -66,16 +62,15 @@ PROCESS_THREAD(udp_client_process, ev, data)
       /* Send to DAG root */
       unsigned temp = sht11_sensor.value(SHT11_SENSOR_TEMP);
       unsigned hum = sht11_sensor.value(SHT11_SENSOR_HUMIDITY);
-      LOG_INFO("Sending request %u to ", count);
+      LOG_INFO("[CLIENT]: Sending data to ");
       LOG_INFO_6ADDR(&dest_ipaddr);
       LOG_INFO_("\n");
       snprintf(str, sizeof(str), "%d %d", temp, hum);
       simple_udp_sendto(&udp_conn, str, strlen(str), &dest_ipaddr);
-      count++;
     }
     else
     {
-      LOG_INFO("Not reachable yet\n");
+      LOG_INFO("Routing not estabilished yet or server not reachable\n");
     }
 
     /* Add some jitter */
