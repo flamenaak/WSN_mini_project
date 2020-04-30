@@ -6,7 +6,8 @@
 #include "random.h"
 #include "dev/button-sensor.h"
 #include "sys/log.h"
-#define LOG_MODULE "App"
+#include "sys/node-id.h"
+#define LOG_MODULE "SERVER"
 #define LOG_LEVEL LOG_LEVEL_INFO
 
 #define WITH_SERVER_REPLY  1
@@ -16,10 +17,30 @@
 
 static struct simple_udp_connection udp_conn;
 
-PROCESS(udp_server_process, "UDP server");
-AUTOSTART_PROCESSES(&udp_server_process);
 
-static void udp_rx_callback(struct simple_udp_connection *c,
+
+/* Declare and auto-start this file's process */
+PROCESS(udp_server_process, "UDP server");
+PROCESS(contiki_ng_br, "Contiki-NG Border Router");
+AUTOSTART_PROCESSES(&contiki_ng_br,&udp_server_process);
+
+
+/*---------------------------------------------------------------------------*/
+PROCESS_THREAD(contiki_ng_br, ev, data)
+{
+  PROCESS_BEGIN();
+
+#if BORDER_ROUTER_CONF_WEBSERVER
+  PROCESS_NAME(webserver_nogui_process);
+  process_start(&webserver_nogui_process, NULL);
+#endif /* BORDER_ROUTER_CONF_WEBSERVER */
+
+  LOG_INFO("Contiki-NG Border Router started\n");
+
+  PROCESS_END();
+}
+
+static void udp_callback(struct simple_udp_connection *c,
          const uip_ipaddr_t *sender_addr,
          uint16_t sender_port,
          const uip_ipaddr_t *receiver_addr,
@@ -27,16 +48,15 @@ static void udp_rx_callback(struct simple_udp_connection *c,
          const uint8_t *data,
          uint16_t datalen){  
 /* Send same data back to client as ack */
-simple_udp_sendto(&udp_conn, data, datalen, sender_addr);
-
-LOG_INFO("[SERVER]: Storing received data '%.*s' \n", datalen, (char *) data);
-int fd;
-fd = cfs_open("receivedMsgs", CFS_WRITE + CFS_APPEND);
-cfs_write(fd, (char *) data, 32);
-cfs_close(fd);
-  
+  simple_udp_sendto(&udp_conn, data, datalen, sender_addr);
+  LOG_INFO("Storing received data '%.*s' \n", datalen, (char *) data);
+  //int fd;
+  //fd = cfs_open("receivedMsgs", CFS_WRITE + CFS_APPEND);
+  //cfs_write(fd, (char *) data, 32);
+  //cfs_close(fd);
 }
-/*---------------------------------------------------------------------------*/
+
+
 PROCESS_THREAD(udp_server_process, ev, data){
   static struct etimer periodic_timer;
   PROCESS_BEGIN();
@@ -44,19 +64,18 @@ PROCESS_THREAD(udp_server_process, ev, data){
 
 
   /* Initialize DAG root */
-  NETSTACK_ROUTING.root_start();
+  //NETSTACK_ROUTING.root_start();
 
   /* Initialize UDP connection */
-  simple_udp_register(&udp_conn, UDP_SERVER_PORT, NULL, UDP_CLIENT_PORT, udp_rx_callback);
+  simple_udp_register(&udp_conn, UDP_SERVER_PORT, NULL, UDP_CLIENT_PORT, udp_callback);
 
   while (1) {
     PROCESS_WAIT_EVENT_UNTIL(ev == sensors_event && data == &button_sensor);
     // On button click event here!////////   
-    LOG_INFO("[SERVER]: Button Clicked!\n");
+    LOG_INFO("Button Clicked!\n");
     //////////////////////////////////////
     etimer_set(&periodic_timer, SEND_INTERVAL - CLOCK_SECOND + (random_rand() % (2 * CLOCK_SECOND)));
   }
 
   PROCESS_END();
 }
-/*---------------------------------------------------------------------------*/

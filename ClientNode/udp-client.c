@@ -5,11 +5,12 @@
 #include "net/ipv6/simple-udp.h"
 
 #include "dev/button-sensor.h"
+#include "sys/node-id.h"
 
 #include "sys/log.h"
 #include "dev/sht11/sht11-sensor.h"
 
-#define LOG_MODULE "App"
+#define LOG_MODULE "CLIENT"
 #define LOG_LEVEL LOG_LEVEL_INFO
 
 #define WITH_SERVER_REPLY 1
@@ -21,6 +22,7 @@
 static struct simple_udp_connection udp_conn;
 
 PROCESS(udp_client_process, "UDP client");
+
 AUTOSTART_PROCESSES(&udp_client_process);
 
 static void
@@ -34,7 +36,7 @@ udp_rx_callback(struct simple_udp_connection *c,
 {
   // Code for handling response from server - not neccessary
   // or maybe just log osme kind of ackn.
-  LOG_INFO("[CLIENT]: Response from server received!\n");
+  LOG_INFO("Response from server received!\n");
 }
 
 
@@ -62,10 +64,11 @@ PROCESS_THREAD(udp_client_process, ev, data)
       /* Send to DAG root */
       unsigned temp = sht11_sensor.value(SHT11_SENSOR_TEMP);
       unsigned hum = sht11_sensor.value(SHT11_SENSOR_HUMIDITY);
-      LOG_INFO("[CLIENT]: Sending data to ");
+      
+      LOG_INFO("Sending data to ");
       LOG_INFO_6ADDR(&dest_ipaddr);
       LOG_INFO_("\n");
-      snprintf(str, sizeof(str), "%d %d", temp, hum);
+      snprintf(str, sizeof(str), "%d %d %d", node_id, temp, hum);
       simple_udp_sendto(&udp_conn, str, strlen(str), &dest_ipaddr);
     }
     else
