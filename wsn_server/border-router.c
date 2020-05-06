@@ -9,6 +9,8 @@
 #include "sys/log.h"
 #include "sys/node-id.h"
 #include <string.h>
+
+
 //#include "os/storage/cfs/cfs.h"
 
 #define LOG_MODULE "SERVER"
@@ -27,8 +29,8 @@ static struct simple_udp_connection udp_conn;
 PROCESS(udp_server_process, "UDP server");
 PROCESS(contiki_ng_br, "Contiki-NG Border Router");
 AUTOSTART_PROCESSES(&contiki_ng_br,&udp_server_process);
-const int maxStoredMsgs = 5;
-char msgs[5][15];
+const int maxStoredMsgs = 10;
+char msgs[10][15];
 int counter = 0;
 
 
@@ -36,7 +38,7 @@ static void DoAgregatinAndSend(){
   LOG_INFO("Agregation executed\n");
 
   //char *results[10];
-  char nodes[10][3];
+  char nodes[10][10];
   bool setFlag = false;
   int nodeCounter = 0;
   int subCounter = 0;
@@ -83,14 +85,14 @@ static void DoAgregatinAndSend(){
     tmpEntries = 0;
     tmpMin = -90;
     tmpSum = 0;
-    tmpValue = -90;
+    tmpValue = 0;
     firstValue = "";
 
     for (subCounter = 0; subCounter < maxStoredMsgs; subCounter++){
       //nodeID = strtok (msgs[subCounter]," ");
       //firstValue = strtok (NULL, " ");
       strcpy(tmpMsg, msgs[subCounter]);
-      nodeID = strtok (msgs[subCounter]," ,.-");
+      nodeID = strtok (tmpMsg," ,.-");
       if(strcmp(nodeID, nodes[counter]) == 0) {
         tmpEntries++;
         firstValue = strtok (NULL, " ,.-");
@@ -121,7 +123,7 @@ static void udp_callback(struct simple_udp_connection *c,
          uint16_t datalen){  
 /* Send same data back to client as ack */
   simple_udp_sendto(&udp_conn, data, datalen, sender_addr);
-  LOG_INFO("Storing received data '%.*s' \n", datalen, (char *) data);
+  LOG_INFO("Storing received data %d - '%s' \n", counter, data);
   strcpy(msgs[counter], (char *) data);
   counter = counter+1;
 
