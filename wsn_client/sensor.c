@@ -12,9 +12,8 @@
 #include "net/ipv6/uiplib.h"
 #include <stdio.h>
 #include <stdlib.h>
-
 //////////////////////////////////////////
-static bool agregationEnabled = true;
+static bool agregationEnabled = false;
 //////////////////////////////////////////
 
 #define LOG_MODULE "SENSOR"
@@ -26,12 +25,15 @@ static struct simple_udp_connection udp_conn;
 int dataSum = 0;
 int dataCounter = 0;
 int avg = 0;
+
+
 PROCESS(udp_client_process, "UDP Sensor");
+
 AUTOSTART_PROCESSES(&udp_client_process);
 
 PROCESS_THREAD(udp_client_process, ev, data){
   static struct etimer periodic_timer;
-  static char str[3];
+  static char str[4];
   uip_ipaddr_t dest_ipaddr;
   PROCESS_BEGIN();
   simple_udp_register(&udp_conn, UDP_CLIENT_PORT, NULL, UDP_SERVER_PORT, NULL);
@@ -65,4 +67,3 @@ PROCESS_THREAD(udp_client_process, ev, data){
   PROCESS_END();
 
 }
-/*---------------------------------------------------------------------------*/

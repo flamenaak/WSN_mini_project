@@ -66,15 +66,21 @@ static void udp_callback(struct simple_udp_connection *c,
     return;
   }
 
+  
+
   if (agregationEnabled){
-    LOG_INFO("Storing received data %d - '%s' \n", counter, data);
+    LOG_INFO("Storing received data %d - '%s' \n", counter, (char *) data);
+    if (atoi((char *)data) > 27){
+      LOG_INFO("EXTREME DETECTED!! Prioritizing message!\n");
+      simple_udp_sendto(&udp_conn, data, datalen, &sink_ipaddr);
+    }
     sum += atoi((char *)data);
     counter = counter+1;
     if (counter == maxStoredMsgs){
       DoAgregatinAndSend();
     }
   } else {
-    LOG_INFO("Piping received data to sink: '%s' \n",data);
+    LOG_INFO("Piping received data to sink: '%s' \n", (char *) data);
     sum = atoi((char *)data);
     Send();
   }
