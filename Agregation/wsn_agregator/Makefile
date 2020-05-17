@@ -10,7 +10,6 @@ PLATFORMS_EXCLUDE = nrf52dk z1
 # Include RPL BR module
 include $(CONTIKI)/Makefile.dir-variables
 MODULES += $(CONTIKI_NG_SERVICES_DIR)/rpl-border-router
-MODULES += $(CONTIKI_NG_APP_LAYER_DIR)/coap
 #MODULES_REL += webserver
 # Include webserver module
 # Include optional target-specific module
