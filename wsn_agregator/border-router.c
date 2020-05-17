@@ -8,16 +8,13 @@
 #include "sys/log.h"
 #include <string.h>
 
-
-//#include "os/storage/cfs/cfs.h"
-
+//////////////////////////////////////////
+static bool agregationEnabled = true;
+//////////////////////////////////////////
 #define LOG_MODULE "AGREGATOR"
 #define LOG_LEVEL LOG_LEVEL_INFO
-
-#define WITH_SERVER_REPLY  1
 #define UDP_CLIENT_PORT	8765
 #define UDP_SERVER_PORT	5678
-#define SEND_INTERVAL (60 * CLOCK_SECOND)
 
 static struct simple_udp_connection udp_conn;
 uip_ipaddr_t sink_ipaddr;
@@ -26,16 +23,13 @@ static char str[10];
 const int maxStoredMsgs = 10;
 int sum = 0;
 int counter = 0;
-
-
-
 PROCESS(contiki_ng_br, "Contiki-NG Border Router");
 AUTOSTART_PROCESSES(&contiki_ng_br);
 
 static void DoAgregatinAndSend(){
   LOG_INFO("Agregation executed\n");
   if (sinkAvailable){
-    snprintf(str, sizeof(str), "%d %d", counter, sum);
+    snprintf(str, sizeof(str), "%d", sum/maxStoredMsgs);
     simple_udp_sendto(&udp_conn, str, strlen(str), &sink_ipaddr);
   } else {
     LOG_INFO("Sink not available!\n");
@@ -44,7 +38,15 @@ static void DoAgregatinAndSend(){
   sum = 0;
 }
 
+static void Send(){
+  if (sinkAvailable){
+    snprintf(str, sizeof(str), "%d", sum);
+    simple_udp_sendto(&udp_conn, str, strlen(str), &sink_ipaddr);
+  } else {
+    LOG_INFO("Sink not available!\n");
+  }
 
+}
 
 static void udp_callback(struct simple_udp_connection *c,
          const uip_ipaddr_t *sender_addr,
@@ -54,7 +56,6 @@ static void udp_callback(struct simple_udp_connection *c,
          const uint8_t *data,
          uint16_t datalen){  
 
-/* Send same data back to client as ack */
   if (strcmp((char *) data, "sink") == 0){
     LOG_INFO("Sink registered: ");
     sinkAvailable = true;
@@ -64,15 +65,20 @@ static void udp_callback(struct simple_udp_connection *c,
     simple_udp_sendto(&udp_conn, data, datalen, sender_addr);
     return;
   }
-  simple_udp_sendto(&udp_conn, data, datalen, sender_addr);
 
-  LOG_INFO("Storing received data %d - '%s' \n", counter, data);
-  sum += atoi((char *)data);
-  counter = counter+1;
-
-  if (counter == maxStoredMsgs){
-    DoAgregatinAndSend();
+  if (agregationEnabled){
+    LOG_INFO("Storing received data %d - '%s' \n", counter, data);
+    sum += atoi((char *)data);
+    counter = counter+1;
+    if (counter == maxStoredMsgs){
+      DoAgregatinAndSend();
+    }
+  } else {
+    LOG_INFO("Piping received data to sink: '%s' \n",data);
+    sum = atoi((char *)data);
+    Send();
   }
+  
 
 
 }

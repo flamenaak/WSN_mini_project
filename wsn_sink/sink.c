@@ -16,6 +16,7 @@
 
 static struct simple_udp_connection udp_conn;
 bool responseReceived = false;
+int dataCounter = 0;
 
 /*---------------------------------------------------------------------------*/
 PROCESS(udp_client_process, "SINK");
@@ -31,12 +32,11 @@ udp_rx_callback(struct simple_udp_connection *c,
          uint16_t datalen)
 {
   if (strcmp((char *) data, "sink") == 0){
-    //uip_ipaddr_copy(sink_ipaddr,sender_addr);
     LOG_INFO("Sink registered confirmation!\n");
     responseReceived = true;
     return;
   }else {
-    LOG_INFO("Data received: %s \n",data);
+    LOG_INFO("Data received: %d - %s \n",++dataCounter,data);
   }
   
 }
